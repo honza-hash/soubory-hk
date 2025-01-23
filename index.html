@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="system">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudioHonzik - Úložiště souborů</title>
+    
+    <!-- Preload resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2587145231967657" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --primary: hsl(217, 91%, 60%);
+            --primary-hover: hsl(217, 91%, 50%);
+            --accent: hsl(38, 92%, 50%);
+            --text: hsl(222, 47%, 11%);
+            --bg: hsl(210, 40%, 98%);
+            --surface: hsl(0, 0%, 100%);
+            --shadow: 0 8px 32px hsla(0, 0%, 0%, 0.1);
+            --radius: 1.25rem;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Dark theme */
+            --dark-text: hsl(210, 40%, 98%);
+            --dark-bg: hsl(240, 10%, 9%);
+            --dark-surface: hsl(240, 10%, 15%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+
+        body {
+            font-family: 'Geist', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --text: var(--dark-text);
+                --bg: var(--dark-bg);
+                --surface: var(--dark-surface);
+                --shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
+            }
+        }
+
+        [data-theme="dark"] {
+            --text: var(--dark-text);
+            --bg: var(--dark-bg);
+            --surface: var(--dark-surface);
+            --shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
+        }
+
+        .container {
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            width: 95%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid hsl(0, 0%, 90%);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                120deg,
+                hsl(217, 91%, 60%, 0.1) 0%,
+                hsl(38, 92%, 50%, 0.05) 100%
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: var(--surface);
+            border-radius: calc(var(--radius) - 4px);
+            border: 1px solid hsl(0, 0%, 90%);
+            transition: var(--transition);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: calc(var(--radius) - 4px);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 2rem;
+        }
+
+        .home-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+        }
+
+        .access-notice {
+            background: hsla(38, 92%, 50%, 0.1);
+            color: var(--text);
+            padding: 1.25rem;
+            border-radius: calc(var(--radius) - 4px);
+            border-left: 4px solid var(--accent);
+            margin: 2rem 0;
+            backdrop-filter: blur(8px);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid hsl(0, 0%, 80%);
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" aria-label="Přepnout motiv">🌓</button>
+
+    <div class="container">
+        <h1>Privátní úložiště souborů</h1>
+        
+        <div class="content">
+            <div class="access-notice">
+                🔒 Toto úložiště je přístupné pouze autorizovaným osobám
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💽</div>
+                    <h3>Audio soubory</h3>
+                    <p>Profesionální úložiště pro .au a další audio formáty</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Rychlé stahování</h3>
+                    <p>Maximální přenosová rychlost díky Ihos CDN</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Zabezpečení</h3>
+                    <p>Šifrované přenosy a bezpečné uložení</p>
+                </div>
+            </div>
+
+            <p>Toto úložiště slouží pro privátní projekty a obsahuje citlivá data. Přístup je povolen pouze po předchozí autorizaci.</p>
+
+            <button onclick="location.href='/'" class="home-btn">
+                <span>🏠</span>
+                Zpět na hlavní stránku
+            </button>
+
+            <div class="access-notice">
+                🚀 Technologie: <strong>Ihos CDN</strong> | Enterprise-grade řešení
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Management
+        class ThemeSystem {
+            constructor() {
+                this.themeToggle = document.querySelector('.theme-toggle');
+                this.currentTheme = localStorage.getItem('theme') || 'system';
+                this.init();
+            }
+
+            init() {
+                document.documentElement.setAttribute('data-theme', this.currentTheme);
+                this.addEventListeners();
+                this.watchSystemTheme();
+            }
+
+            addEventListeners() {
+                this.themeToggle.addEventListener('click', () => this.toggleTheme());
+            }
+
+            toggleTheme() {
+                this.currentTheme = 
+                    this.currentTheme === 'light' ? 'dark' :
+                    this.currentTheme === 'dark' ? 'system' : 'light';
+                
+                document.documentElement.setAttribute('data-theme', this.currentTheme);
+                localStorage.setItem('theme', this.currentTheme);
+                this.updateSystemTheme();
+            }
+
+            watchSystemTheme() {
+                window.matchMedia('(prefers-color-scheme: dark)')
+                    .addEventListener('change', e => {
+                        if (this.currentTheme === 'system') this.updateSystemTheme();
+                    });
+            }
+
+            updateSystemTheme() {
+                if (this.currentTheme === 'system') {
+                    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+                }
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            new ThemeSystem();
+        });
+    </script>
+</body>
+</html>
